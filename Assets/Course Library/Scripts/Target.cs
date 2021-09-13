@@ -15,6 +15,7 @@ public class Target : MonoBehaviour
     private float ySpawnPos = -4;
     private GameManager gameManager;
     public int pointValue;
+    public GameObject gameOverObs;
     public ParticleSystem explosionParticle;
     
     void Start()
@@ -26,6 +27,7 @@ public class Target : MonoBehaviour
         // Assign the gameManager to the script in the Unity 
         // by finding the gameObject GameManager and gameManager script
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+      
         
         
         // Add upward force to the object, by mutiplying to a random range from 12, 16 
@@ -63,6 +65,11 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
+        if (!gameObject.CompareTag("Bad"))
+        {
+            GameOver();
+        }
+       
     }
 
     private Vector3 RandomSpawnPos()
@@ -78,6 +85,14 @@ public class Target : MonoBehaviour
     private float RandomForce()
     {
         return Random.Range(minForce, maxForce);
+    }
+
+    private void GameOver()
+    {
+        
+            gameManager.gameOverText.gameObject.SetActive(true);
+        
+        
     }
     
     
